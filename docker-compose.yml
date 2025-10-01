@@ -1,0 +1,40 @@
+services:
+    client:
+        image: webapp-client
+        restart: always
+        ports:
+          - "3000:3000"
+        volumes:
+          - ./client:/client
+        links:
+          - api
+        networks:
+          - webappnetwork
+        build: ./client
+    api:
+      image: webapp-api
+      restart: always
+      ports:
+        - "9000:9000"
+      volumes:
+        - ./api:/api
+      depends_on:
+          - mongodb
+      networks:  
+          - webappnetwork
+      build: ./api
+    mongodb:
+        image: mongo
+        restart: always
+        container_name: mongodb
+        volumes:
+            - .data-node:/data/db
+        ports:
+            - 27017:27017
+        command: mongod --noauth
+        networks:
+            - webappnetwork
+
+networks:
+  webappnetwork:
+      driver: bridge

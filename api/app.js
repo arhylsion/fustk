@@ -46,8 +46,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // --- MOUNT ROUTERS ---
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/api/auth', authRouter); 
+app.use('/api/auth', authRouter);
+app.use('/api/users', usersRouter) 
 
 // Error Handler Sederhana
 app.use((err, req, res, next) => {
